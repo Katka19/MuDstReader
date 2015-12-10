@@ -241,6 +241,7 @@ void HistAllocation();
 
 //******multiplicity histograms
 //
+
 StRefMultCorr *refmultCorrUtil;
 
 TH1F *mult_mb;
@@ -255,7 +256,20 @@ TH1F *mult_mb;
    TH1F *event_runid_cent;
    TH1F *mult_runid_cent_cut;
    TH1F *event_runid_cent_cut;
-
+   
+   TH1F *mult_runid_zoom;
+   TH1F *mult_runid_zoom_corr;
+   TH1F *event_runid_zoom;
+   TH1F *mult_runid_cent_zoom;
+   TH1F *mult_runid_cent_zoom_corr;
+   TH1F *event_runid_cent_zoom;
+   TH1F *mult_runid_cent_cut_zoom;
+   TH1F *mult_runid_cent_cut_zoom_corr;
+   TH1F *event_runid_cent_cut_zoom;
+TH1F *multCorr;
+TH1F *multCorr_cent;
+TH1F *multCorr_cent_cut;
+TH1F *hWeight;
 //*****end of multiplicity histograms
 
 TH1F *Vz_before;
