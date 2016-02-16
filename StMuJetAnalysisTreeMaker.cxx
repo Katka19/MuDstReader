@@ -203,7 +203,11 @@ Int_t StMuJetAnalysisTreeMaker::Init()
   //MTree->SetAutoSave(100000);
 
 //  initEmc();	   ///......................uncomment
-//  HistAllocation();    //..................ucomment
+//  HistAllocation();    //..................uncomment
+
+
+//  TFile *weightFile = TFile::Open("weight.root");
+//  TH1F *hWeight = (TH1F*)weightFile->Get("")->Clone("");
 
 //******multiplicity histrogams
 //
@@ -213,6 +217,8 @@ refmultCorrUtil = CentralityMaker::instance()->getRefMultCorr();
 
 mult_mb = new TH1F("mult_mb","mult_mb",800,0,800);
    mult_mb->Sumw2();
+mult_mb_weight = new TH1F("mult_mb_weight","mult_mb_weight",800, 0, 800);
+mult_mb_weight->Sumw2();
    centrality = new TH1F("centrality","centrality",9,0,9);
    centrality->Sumw2();
    mult_cent = new TH1F("mult_cent","mult_cent",800,0,800);
@@ -223,17 +229,17 @@ mult_mb = new TH1F("mult_mb","mult_mb",800,0,800);
    mult_cent_cut_5_10->Sumw2();
    mult_cent_cut_10_20 = new TH1F("mult_cent_cut_10_20","mult_cent_cut_10_20",800,0,800);
    mult_cent_cut_10_20->Sumw2();
-   mult_runid = new TH1F("mult_runid","mult_runid",10000, 13114000, 13137010);
+   mult_runid = new TH1F("mult_runid","mult_runid",21990, 13114025, 13136015);
    mult_runid->Sumw2();
-   event_runid = new TH1F("event_runid","event_runid",10000, 13114000, 13137010);
+   event_runid = new TH1F("event_runid","event_runid",21990, 13114025, 13136015);
    event_runid->Sumw2();
-   mult_runid_cent = new TH1F("mult_runid_cent","mult_runid_cent",10000, 13114000, 13137010);
+   mult_runid_cent = new TH1F("mult_runid_cent","mult_runid_cent",21990, 13114025, 13136015);
    mult_runid_cent->Sumw2();
-   event_runid_cent = new TH1F("event_runid_cent","event_runid_cent",10000, 13114000, 13137010);
+   event_runid_cent = new TH1F("event_runid_cent","event_runid_cent",21990, 13114025, 13136015);
    event_runid_cent->Sumw2();
-   mult_runid_cent_cut = new TH1F("mult_runid_cent_cut","mult_runid_cent_cut",10000, 13114000, 13137010);
+   mult_runid_cent_cut = new TH1F("mult_runid_cent_cut","mult_runid_cent_cut",21990, 13114025, 13136015);
    mult_runid_cent_cut->Sumw2();
-   event_runid_cent_cut = new TH1F("event_runid_cent_cut","event_runid_cent_cut",10000, 13114000, 13137010);
+   event_runid_cent_cut = new TH1F("event_runid_cent_cut","event_runid_cent_cut",21990, 13114025, 13136015);
    event_runid_cent_cut->Sumw2();
 
    mult_runid_zoom = new TH1F("mult_runid_zoom","mult_runid_zoom",70, 13117000, 13117070);
@@ -257,12 +263,15 @@ mult_mb = new TH1F("mult_mb","mult_mb",800,0,800);
    
    multCorr = new TH1F("multCorr","multCorr",800,0,800);
    multCorr->Sumw2();
+   multCorr_weight = new TH1F("multCorr_weight","multCorr_weight",800,0,800);
+   multCorr_weight->Sumw2();
    multCorr_cent = new TH1F("multCorr_cent","multCorr_cent",800,0,800);
    multCorr_cent->Sumw2();
    multCorr_cent_cut = new TH1F("multCorr_cent_cut","multCorr_cent_cut",800,0,800);
    multCorr_cent_cut->Sumw2();
 hWeight = new TH1F("hWeight","hWeight;weight",100,0,2);
-//******end of multiplicity histograms
+hWeightMB = new TH1F("hWeightMB","hWeightMB",9000,1000,10000);
+//--------end of multiplicity histograms
 
   cout<<"******** end of Init Stage **********"<<endl; 
 
@@ -326,35 +335,38 @@ mFile->cd();
 
 //*********multiplicity histograms
 
-mult_mb->Write();
+//mult_mb->Write();
+//mult_mb_weight->Write();
    centrality->Write();
-   mult_cent->Write();
-   mult_cent_cut->Write();
-   mult_cent_cut_5_10->Write();
-   mult_cent_cut_10_20->Write();
+   //mult_cent->Write();
+   //mult_cent_cut->Write();
+   //mult_cent_cut_5_10->Write();
+   //mult_cent_cut_10_20->Write();
    mult_runid->Write();
    event_runid->Write();
    mult_runid_cent->Write();
    event_runid_cent->Write();
    mult_runid_cent_cut->Write();
    event_runid_cent_cut->Write();
-   mult_runid_zoom->Write();
-   mult_runid_zoom_corr->Write();
-   event_runid_zoom->Write();
-   mult_runid_cent_zoom->Write();
-   mult_runid_cent_zoom_corr->Write();
-   event_runid_cent_zoom->Write();
-   mult_runid_cent_cut_zoom->Write();
-   mult_runid_cent_cut_zoom_corr->Write();
-   event_runid_cent_cut_zoom->Write();
+   //mult_runid_zoom->Write();
+   //mult_runid_zoom_corr->Write();
+   //event_runid_zoom->Write();
+   //mult_runid_cent_zoom->Write();
+   //mult_runid_cent_zoom_corr->Write();
+   //event_runid_cent_zoom->Write();
+   //mult_runid_cent_cut_zoom->Write();
+   //mult_runid_cent_cut_zoom_corr->Write();
+   //event_runid_cent_cut_zoom->Write();
    multCorr->Write();
+   //multCorr_weight->Write();
    multCorr_cent->Write();
    multCorr_cent_cut->Write();
 hWeight->Write();
+hWeightMB->Write();
 
 //*******end of multiplicity histograms
-
 /*
+
 Vz_before->Write();
 DiffVz_before->Write();
 
@@ -507,7 +519,7 @@ cout<<"before writing primary vertex position"<<endl;
 
  
 
-  /*   //.......................uncomment
+/*     //.......................uncomment
   if(!mCurrentMu->muEmcCollection()) {
     cout<<"NO EMC collection - skipping event"<<endl;
     delete MEvent;
@@ -519,7 +531,7 @@ cout<<"before writing primary vertex position"<<endl;
   //emcCollection = (StEmcCollection*)mCurrentMu->emcCollection();
   //assert(emcCollection);
   //.....................uncomment
-    */
+  */  
 
 /*  if (mDoPrimTrks){
     doPrimTrks();  
@@ -626,6 +638,8 @@ int ntrig = 6;
 bool isTrigger = false;
 bool isTriggerCent = false;
 
+int run = muEvent->runId();
+
 for(int i=0; i<ntrig; i++){
         isTrigger = muEvent->triggerIdCollection().nominal().isTrigger(trig[i]);
         if(isTrigger == true) break;
@@ -636,7 +650,9 @@ for(int iCent=0; iCent<ntrigCent; iCent++){
         if(isTriggerCent == true) break;
 }
 
-if(fabs(Vz)<30 && fabs(DiffVz)<3){// && isTrigger == true){
+if(fabs(Vz)<30 && fabs(DiffVz)<3 && (run != 13129047 && run != 13129048 && run != 13129016 && run != 13129017
+	&& run != 13117029 && run!= 13117030 && run != 13117031 && run != 13117032 && run != 13117033
+	&& run!= 13117034 && run != 13117035 && run != 13117036)){// && isTrigger == true){
 
 	refmultCorrUtil->init(muEvent->runId());
 	refmultCorrUtil->initEvent(muEvent->refMult(), Vz, muEvent->runInfo().zdcCoincidenceRate());
@@ -648,22 +664,22 @@ if(fabs(Vz)<30 && fabs(DiffVz)<3){// && isTrigger == true){
 	const double weight = refmultCorrUtil->getWeight();
 
         if(isTrigger == true){
-                mult_mb->Fill(muEvent->refMult());
                 mult_runid->Fill(muEvent->runId(), corr);
                 event_runid->Fill(muEvent->runId());
-                mult_runid_zoom->Fill(muEvent->runId(), muEvent->refMult());
-                event_runid_zoom->Fill(muEvent->runId());
-                mult_runid_zoom_corr->Fill(muEvent->runId(), corr);
+                //mult_runid_zoom->Fill(muEvent->runId(), muEvent->refMult());
+                //event_runid_zoom->Fill(muEvent->runId());
+                //mult_runid_zoom_corr->Fill(muEvent->runId(), corr);
 		multCorr->Fill(corr);
-                }
-        if(isTriggerCent == true){
+		hWeightMB->Fill(weight);
+        }
+	if(isTriggerCent == true){
 
-                mult_cent->Fill(muEvent->refMult());
+                //mult_cent->Fill(muEvent->refMult());
                 mult_runid_cent->Fill(muEvent->runId(), corr);
                 event_runid_cent->Fill(muEvent->runId());
-                mult_runid_cent_zoom->Fill(muEvent->runId(), muEvent->refMult());
-                event_runid_cent_zoom->Fill(muEvent->runId());
-                mult_runid_cent_zoom_corr->Fill(muEvent->runId(), corr);
+                //mult_runid_cent_zoom->Fill(muEvent->runId(), muEvent->refMult());
+                //event_runid_cent_zoom->Fill(muEvent->runId());
+                //mult_runid_cent_zoom_corr->Fill(muEvent->runId(), corr);
 		multCorr_cent->Fill(corr);
 
                 //refmultCorrUtil->init(muEvent->runId());
@@ -671,17 +687,17 @@ if(fabs(Vz)<30 && fabs(DiffVz)<3){// && isTrigger == true){
                 const Int_t cent9 = refmultCorrUtil->getCentralityBin9();
                 centrality->Fill(cent9);
 
-                if(cent9 == 7){mult_cent_cut_5_10->Fill(muEvent->refMult());}//..5-10%
-                if(cent9 == 6){mult_cent_cut_10_20->Fill(muEvent->refMult());}//..10-20%
+                //if(cent9 == 7){mult_cent_cut_5_10->Fill(muEvent->refMult());}//..5-10%
+                //if(cent9 == 6){mult_cent_cut_10_20->Fill(muEvent->refMult());}//..10-20%
 
                 if(cent9 == 8){ //..0-5% centrality
 			hWeight->Fill(weight);
-                        mult_cent_cut->Fill(muEvent->refMult());
+                        //mult_cent_cut->Fill(muEvent->refMult());
                         mult_runid_cent_cut->Fill(muEvent->runId(), corr);
                         event_runid_cent_cut->Fill(muEvent->runId());
-                        mult_runid_cent_cut_zoom->Fill(muEvent->runId(),muEvent->refMult());
-                        event_runid_cent_cut_zoom->Fill(muEvent->runId());
-                        mult_runid_cent_cut_zoom_corr->Fill(muEvent->runId(), corr);
+                        //mult_runid_cent_cut_zoom->Fill(muEvent->runId(),muEvent->refMult());
+                        //event_runid_cent_cut_zoom->Fill(muEvent->runId());
+                        //mult_runid_cent_cut_zoom_corr->Fill(muEvent->runId(), corr);
 			multCorr_cent_cut->Fill(corr);
                 }
         }
@@ -693,8 +709,36 @@ if(fabs(Vz)<30 && fabs(DiffVz)<3){// && isTrigger == true){
 /*
 
 //BEGINS PART TO ONLY SAVE HISTOGRAMS----------------------------
-StRefMultCorr* refmultCorrUtil  = CentralityMaker::instance()->getRefMultCorr() ;
+//StRefMultCorr* refmultCorrUtil  = CentralityMaker::instance()->getRefMultCorr() ;
 
+double trigCent[4] = {400132, 400142, 400122, 400102};//..physics central5
+int ntrigCent = 4;
+bool isTriggerCent = false;
+
+for(int iCent=0; iCent<ntrigCent; iCent++){
+        isTriggerCent = muEvent->triggerIdCollection().nominal().isTrigger(trigCent[iCent]);
+        if(isTriggerCent == true) break;
+}
+
+if(isTriggerCent == true){
+
+///star	refmultCorrUtil->init(muEvent->runId());
+        refmultCorrUtil->initEvent(muEvent->refMult(), Vz, muEvent->runInfo().zdcCoincidenceRate());
+        if (refmultCorrUtil->isBadRun(muEvent->runId()))
+        {
+                return kStOK;
+        }
+        const double corr = refmultCorrUtil->getRefMultCorr();
+
+	const Int_t cent9 = refmultCorrUtil->getCentralityBin9();
+	if(cent9 == 8){//..0-5% centrality
+	
+		//...put here all the histograms...
+
+//	}//..put this to the end!!!!!!
+
+//}//..put this to the end!!!!!!
+star///
 cout<<"begin of part for saving only histograms"<<endl;
 Int_t nTracks = mCurrentMu->primaryTracks()->GetEntries();
 Int_t nGlobTracks = mCurrentMu->globalTracks()->GetEntries();
@@ -711,19 +755,30 @@ DiffVz_before->Fill(DiffVz);
 
  if(Vz<30 && Vz>-30 && DiffVz<3 && DiffVz>-3){//if passes event cuts
 
-   float multiplicity = muEvent->refMult();
-   refMultiplicity->Fill(multiplicity);
+   //float multiplicity = muEvent->refMult();
+   //refMultiplicity->Fill(multiplicity);
 
    refmultCorrUtil->init(muEvent->runId());
    refmultCorrUtil->initEvent(muEvent->refMult(), Vz, muEvent->runInfo().zdcCoincidenceRate());
 
+   if (refmultCorrUtil->isBadRun(muEvent->runId()))
+   {
+     return kStOK;
+   }
+   const double corr = refmultCorrUtil->getRefMultCorr();
+
    const Int_t cent9 = refmultCorrUtil->getCentralityBin9();
-   centrality->Fill(cent9);
+   //centrality->Fill(cent9);
 
    if(cent9 == 8){ //..0-5% centrality
 
-      mult_cent->Fill(muEvent->refMult());
+      mult_cent->Fill(corr);
 
+      //..get the weight from histogram
+      double bin = hWeight->GetXaxis()->FindBin(corr);
+      double ww = hWeight->GetBinContent(bin);
+      //..now we have weight and we will fill histograms with weight
+ 
       hVz->Fill(Vz);
       hDiffVz->Fill(DiffVz);
 
@@ -938,6 +993,8 @@ DiffVz_before->Fill(DiffVz);
    }//..loop over primray tracks
  }//if passes refMult cut from StRefMultCorr
 }//if passes event cuts
+
+}//..end of central trigger cut
 
 cout<<"KG4"<<endl;
 */
