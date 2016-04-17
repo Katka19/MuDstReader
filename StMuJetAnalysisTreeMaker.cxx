@@ -270,7 +270,7 @@ mult_mb_weight->Sumw2();
    multCorr_cent_cut = new TH1F("multCorr_cent_cut","multCorr_cent_cut",800,0,800);
    multCorr_cent_cut->Sumw2();
 hWeight = new TH1F("hWeight","hWeight;weight",100,0,2);
-hWeightMB = new TH1F("hWeightMB","hWeightMB",9000,1000,10000);
+hWeightMB = new TH1F("hWeightMB","hWeightMB",100,0,2);
 //--------end of multiplicity histograms
 
   cout<<"******** end of Init Stage **********"<<endl; 
@@ -651,8 +651,11 @@ for(int iCent=0; iCent<ntrigCent; iCent++){
 }
 
 if(fabs(Vz)<30 && fabs(DiffVz)<3 && (run != 13129047 && run != 13129048 && run != 13129016 && run != 13129017
+	&& run != 13117026 && run != 13117027 && run != 13117028 && run != 13126030
 	&& run != 13117029 && run!= 13117030 && run != 13117031 && run != 13117032 && run != 13117033
-	&& run!= 13117034 && run != 13117035 && run != 13117036)){// && isTrigger == true){
+	&& run!= 13117034 && run != 13117035 && run != 13117036
+	&& run != 13121019 && run != 13121020 && run != 13121021 && run != 13121022
+	&& run != 13118034 && run != 13118035)){// && isTrigger == true){
 
 	refmultCorrUtil->init(muEvent->runId());
 	refmultCorrUtil->initEvent(muEvent->refMult(), Vz, muEvent->runInfo().zdcCoincidenceRate());
