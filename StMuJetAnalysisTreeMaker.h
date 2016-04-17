@@ -241,7 +241,7 @@ void HistAllocation();
 
 //******multiplicity histograms
 //
-
+/*
 StRefMultCorr *refmultCorrUtil;
 
 TH1F *mult_mb;
@@ -273,6 +273,7 @@ TH1F *multCorr_cent;
 TH1F *multCorr_cent_cut;
 TH1F *hWeight;
 TH1F *hWeightMB;
+*/
 //*****end of multiplicity histograms
 
 TH1F *Vz_before;
@@ -291,6 +292,7 @@ TH2F *hnsigma;
 TH2F *eta_pt;
 TH2F *phi_pt;
 TH2F *dca_pt;
+TH2F *firstTPC_beforeCuts;
 TH2F *firstTPC;
 TH2F *ndEdx_pt;
 TH3F *nHits_nMax_pt;

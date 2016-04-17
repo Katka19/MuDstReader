@@ -202,19 +202,16 @@ Int_t StMuJetAnalysisTreeMaker::Init()
   //MTree->Branch("PicoJetTree","TStarJetPicoEvent",&MEvent);//,64000,50);
   //MTree->SetAutoSave(100000);
 
-//  initEmc();	   ///......................uncomment
-//  HistAllocation();    //..................uncomment
+  initEmc();	  
+  HistAllocation(); 
 
-
-//  TFile *weightFile = TFile::Open("weight.root");
-//  TH1F *hWeight = (TH1F*)weightFile->Get("")->Clone("");
 
 //******multiplicity histrogams
 //
 //
 
-refmultCorrUtil = CentralityMaker::instance()->getRefMultCorr();
-
+//refmultCorrUtil = CentralityMaker::instance()->getRefMultCorr();
+/*
 mult_mb = new TH1F("mult_mb","mult_mb",800,0,800);
    mult_mb->Sumw2();
 mult_mb_weight = new TH1F("mult_mb_weight","mult_mb_weight",800, 0, 800);
@@ -272,7 +269,7 @@ mult_mb_weight->Sumw2();
 hWeight = new TH1F("hWeight","hWeight;weight",100,0,2);
 hWeightMB = new TH1F("hWeightMB","hWeightMB",100,0,2);
 //--------end of multiplicity histograms
-
+*/
   cout<<"******** end of Init Stage **********"<<endl; 
 
 
@@ -334,7 +331,7 @@ cout<<"saving histograms"<<endl;
 mFile->cd();
 
 //*********multiplicity histograms
-
+/*
 //mult_mb->Write();
 //mult_mb_weight->Write();
    centrality->Write();
@@ -363,9 +360,9 @@ mFile->cd();
    multCorr_cent_cut->Write();
 hWeight->Write();
 hWeightMB->Write();
-
+*/
 //*******end of multiplicity histograms
-/*
+
 
 Vz_before->Write();
 DiffVz_before->Write();
@@ -373,13 +370,14 @@ DiffVz_before->Write();
 hVz->Write();
 hDiffVz->Write();
 
-refMultiplicity->Write();
-centrality->Write();
-mult_cent->Write();
+//refMultiplicity->Write();
+//centrality->Write();
+//mult_cent->Write();
 
 hdEdx->Write();
 hnsigma->Write();
 
+firstTPC_beforeCuts->Write();
 firstTPC->Write();
 nHits_nMax_pt->Write();
 ndEdx_pt->Write();
@@ -435,11 +433,11 @@ pT_partner_unlike->Write();
 pT_partner_like->Write();
 pair_dca_unlike->Write();
 pair_dca_like->Write();
-*/
+
  mFile->Close();
 
 
-//  finishEmc();  //.............uncomment
+ finishEmc();
 
   cout<<"End of StMuJetAnalysisTreeMaker::Finish"<<endl;
 
@@ -478,20 +476,20 @@ cout<<"starting Make"<<endl;
   
  
   
-  //// Event cuts check triggers - for saving histos only
-//  if(fTCutEvent->CheckEventTriggers(muEvent) ==kFALSE) {    //........uncomment
-//    if (mVerbose)cout<<" ### event not taken - triggers ### "<<endl;   //...............uncomment
+  //// Event cuts check triggers - for saving histos only -> not needed, doing it here
+//  if(fTCutEvent->CheckEventTriggers(muEvent) ==kFALSE) {   
+//    if (mVerbose)cout<<" ### event not taken - triggers ### "<<endl; 
 //	return kStOK;    ///KATKA added
-//  }     //.............uncomment
+//  }    
   
  
   //  if (mVerbose)cout<<" ### Petr event passed triggers ### "<<endl;
 
   //Event cuts - includes also the trigger cut
-//  if(fTCutEvent->CheckEvent(mCurrentMu) != 1) {   //............uncomment
-//    if (mVerbose)cout<<" ### event not taken ### "<<endl;     //................uncomment
-//    return kStOK;   //...........................uncomment
-//  }        //.................uncomment
+//  if(fTCutEvent->CheckEvent(mCurrentMu) != 1) {  
+//    if (mVerbose)cout<<" ### event not taken ### "<<endl; 
+//    return kStOK; 
+//  }   
   
 /*  
   StMuPrimaryVertex* fprimaryVertex =  mCurrentMu->primaryVertex();
@@ -519,7 +517,6 @@ cout<<"before writing primary vertex position"<<endl;
 
  
 
-/*     //.......................uncomment
   if(!mCurrentMu->muEmcCollection()) {
     cout<<"NO EMC collection - skipping event"<<endl;
     delete MEvent;
@@ -530,8 +527,7 @@ cout<<"before writing primary vertex position"<<endl;
   assert(mEmcCol);
   //emcCollection = (StEmcCollection*)mCurrentMu->emcCollection();
   //assert(emcCollection);
-  //.....................uncomment
-  */  
+  
 
 /*  if (mDoPrimTrks){
     doPrimTrks();  
@@ -626,7 +622,7 @@ cout<<"before writing primary vertex position"<<endl;
 //...........multiplicity histograms
 //StRefMultCorr* refmultCorrUtil = CentralityMaker::instance()->getRefMultCorr();
 //double corr = refmultCorrUtil->getRefMultCorr();
-
+/*
 double Vz = muEvent->primaryVertexPosition().z();
 double vpdVz = muEvent->vpdVz();
 double DiffVz = vpdVz-Vz;
@@ -651,11 +647,11 @@ for(int iCent=0; iCent<ntrigCent; iCent++){
 }
 
 if(fabs(Vz)<30 && fabs(DiffVz)<3 && (run != 13129047 && run != 13129048 && run != 13129016 && run != 13129017
-	&& run != 13117026 && run != 13117027 && run != 13117028 && run != 13126030
-	&& run != 13117029 && run!= 13117030 && run != 13117031 && run != 13117032 && run != 13117033
-	&& run!= 13117034 && run != 13117035 && run != 13117036
-	&& run != 13121019 && run != 13121020 && run != 13121021 && run != 13121022
-	&& run != 13118034 && run != 13118035)){// && isTrigger == true){
+//	&& run != 13117026 && run != 13117027 && run != 13117028 && run != 13126030
+//	&& run != 13117029 && run!= 13117030 && run != 13117031 && run != 13117032 && run != 13117033
+//	&& run!= 13117034 && run != 13117035 && run != 13117036
+	&& run != 13121019 && run != 13121020 && run != 13121021 && run != 13121022)){
+//	&& run != 13118034 && run != 13118035)){// && isTrigger == true){
 
 	refmultCorrUtil->init(muEvent->runId());
 	refmultCorrUtil->initEvent(muEvent->refMult(), Vz, muEvent->runInfo().zdcCoincidenceRate());
@@ -708,8 +704,8 @@ if(fabs(Vz)<30 && fabs(DiffVz)<3 && (run != 13129047 && run != 13129048 && run !
 }
 
 //..........end of multiplicity histograms
+*/
 
-/*
 
 //BEGINS PART TO ONLY SAVE HISTOGRAMS----------------------------
 //StRefMultCorr* refmultCorrUtil  = CentralityMaker::instance()->getRefMultCorr() ;
@@ -723,26 +719,13 @@ for(int iCent=0; iCent<ntrigCent; iCent++){
         if(isTriggerCent == true) break;
 }
 
-if(isTriggerCent == true){
+if(isTriggerCent == false) return kStOk;
 
-///star	refmultCorrUtil->init(muEvent->runId());
-        refmultCorrUtil->initEvent(muEvent->refMult(), Vz, muEvent->runInfo().zdcCoincidenceRate());
-        if (refmultCorrUtil->isBadRun(muEvent->runId()))
-        {
-                return kStOK;
-        }
-        const double corr = refmultCorrUtil->getRefMultCorr();
+int run = muEvent->runId();
 
-	const Int_t cent9 = refmultCorrUtil->getCentralityBin9();
-	if(cent9 == 8){//..0-5% centrality
-	
-		//...put here all the histograms...
+//..cut on bad runs from Hiroshi (high ZDC coincidnce)
+if(run == 13129047 || run == 13129048 || run == 13129016 || run == 13129017) return kStOk;
 
-//	}//..put this to the end!!!!!!
-
-//}//..put this to the end!!!!!!
-star///
-cout<<"begin of part for saving only histograms"<<endl;
 Int_t nTracks = mCurrentMu->primaryTracks()->GetEntries();
 Int_t nGlobTracks = mCurrentMu->globalTracks()->GetEntries();
 const Double_t ELECMASS=0.00051099906;
@@ -755,32 +738,8 @@ float DiffVz = vpdVz-Vz;
 Vz_before->Fill(Vz);
 DiffVz_before->Fill(DiffVz);
 
+if(Vz<30 && Vz>-30 && DiffVz<3 && DiffVz>-3){//..passes event cut
 
- if(Vz<30 && Vz>-30 && DiffVz<3 && DiffVz>-3){//if passes event cuts
-
-   //float multiplicity = muEvent->refMult();
-   //refMultiplicity->Fill(multiplicity);
-
-   refmultCorrUtil->init(muEvent->runId());
-   refmultCorrUtil->initEvent(muEvent->refMult(), Vz, muEvent->runInfo().zdcCoincidenceRate());
-
-   if (refmultCorrUtil->isBadRun(muEvent->runId()))
-   {
-     return kStOK;
-   }
-   const double corr = refmultCorrUtil->getRefMultCorr();
-
-   const Int_t cent9 = refmultCorrUtil->getCentralityBin9();
-   //centrality->Fill(cent9);
-
-   if(cent9 == 8){ //..0-5% centrality
-
-      mult_cent->Fill(corr);
-
-      //..get the weight from histogram
-      double bin = hWeight->GetXaxis()->FindBin(corr);
-      double ww = hWeight->GetBinContent(bin);
-      //..now we have weight and we will fill histograms with weight
  
       hVz->Fill(Vz);
       hDiffVz->Fill(DiffVz);
@@ -818,22 +777,33 @@ DiffVz_before->Fill(DiffVz);
         double nsigma_primary = gl_track->nSigmaElectron();
         short charge1 = gl_track->charge();
 
-	//..filling hists for single track rec. efficiency systematics (must be inclusive electrons)
+	/*//..filling hists for single track rec. efficiency systematics (must be inclusive electrons)
 	if(TMath::Abs(deltaz)<3 && TMath::Abs(deltaphi)<0.015 && nSMDE>1 && nSMDP>1 && 0.3<ratio && ratio<2 && -0.5<nsigma_primary && nsigma_primary<2.5){
 	  if(TMath::Abs(DCA)<1.5 && pT>1.2 && nHits>=20 && hitsRatio>0.52 && dedxHits>=15 && TMath::Abs(pseudorapidity)<0.7){
 	    firstTPC->Fill(pT, firstPoint);}
-	  if(TMath::Abs(DCA)<1.5 && pT>1.2 && nHits>=20 && hitsRatio>0.52 && dedxHits>=15 && firstPoint<73){
-	    eta_pt->Fill(pT, pseudorapidity);}	
+	  //if(TMath::Abs(DCA)<1.5 && pT>1.2 && nHits>=20 && hitsRatio>0.52 && dedxHits>=15 && firstPoint<73){
+	  //  eta_pt->Fill(pT, pseudorapidity);}	
 	  if(TMath::Abs(DCA)<1.5 && pT>1.2 && nHits>=20 && hitsRatio>0.52 && TMath::Abs(pseudorapidity)<0.7 && firstPoint<73){
 	    ndEdx_pt->Fill(pT, dedxHits);} 
 	  if(TMath::Abs(DCA)<1.5 && pT>1.2 && dedxHits>=15 && TMath::Abs(pseudorapidity)<0.7 && firstPoint<73){
 	    nHits_nMax_pt->Fill(pT, nHits, hitsRatio);}
 	  if(pT>1.2 && nHits>=20 && hitsRatio>0.52 && dedxHits>=15 && TMath::Abs(pseudorapidity)<0.7 && firstPoint<73){
 	    dca_pt->Fill(pT, DCA);}
+	}*/
+
+	if(TMath::Abs(deltaz)<3 && TMath::Abs(deltaphi)<0.015 && nSMDE>1 && nSMDP>1 && 0.3<ratio && ratio<2 && -0.5<nsigma_primary && nsigma_primary<2.5){
+	  if(TMath::Abs(DCA)<1.5 && pT>1.2 && nHits>=20 && hitsRatio>0.52 && dedxHits>=15 && TMath::Abs(pseudorapidity)<0.7){
+            firstTPC_beforeCuts->Fill(pT, firstPoint);}
 	}
 	
 	//..good tracks
-	if(TMath::Abs(DCA)<1.5 && pT>1.2 && nHits>=20 && hitsRatio>0.52 && dedxHits>=15 && TMath::Abs(pseudorapidity)<0.7 && firstPoint<73){
+	if(pT < 1.2) continue;
+	if(firstPoint > 73) continue;
+	if(TMath::Abs(pseudorapidity) > 0.7) continue;
+	if(dedxHits < 15) continue;
+	if(nHits < 20 && hitsRatio < 0.52) continue;
+	if(TMath::Abs(DCA) > 1.5) continue;
+	//if(TMath::Abs(DCA)<1.5 && pT>1.2 && nHits>=20 && hitsRatio>0.52 && dedxHits>=15 && TMath::Abs(pseudorapidity)<0.7 && firstPoint<73){
 		
 	  hdEdx->Fill(pT, gl_track->dEdx());
 	  hnsigma->Fill(pT, nsigma_primary);
@@ -841,7 +811,7 @@ DiffVz_before->Fill(DiffVz);
 	  //..filling hists for possible investigation of EMC eff.
 	  if(TMath::Abs(deltaz)<3 && TMath::Abs(deltaphi)<0.015 && nSMDE>1 && nSMDP>1 && -0.5<nsigma_primary && nsigma_primary<2.5){
 	    hpE->Fill(pT, ratio);}
-	  if(TMath::Abs(deltaz)<3 && TMath::Abs(deltaphi)<0.015 && nSMDE>1 && 0.3<ratio && ratio<2 && -0.5<nsigma_primary && nsigma_primary<2.){
+	  if(TMath::Abs(deltaz)<3 && TMath::Abs(deltaphi)<0.015 && nSMDE>1 && 0.3<ratio && ratio<2 && -0.5<nsigma_primary && nsigma_primary<2.5){
 	    hnSMDP->Fill(pT, nSMDP);}
 	  if(TMath::Abs(deltaz)<3 && TMath::Abs(deltaphi)<0.015 && nSMDP>1 && 0.3<ratio && ratio<2 && -0.5<nsigma_primary && nsigma_primary<2.5){
 	    hnSMDE->Fill(pT, nSMDE);}
@@ -853,7 +823,13 @@ DiffVz_before->Fill(DiffVz);
 	  //..inclusive electrons
  	  if(TMath::Abs(deltaz)<3 && TMath::Abs(deltaphi)<0.015 && nSMDE>1 && nSMDP>1 && 0.3<ratio && ratio<2 && -0.5<nsigma_primary && nsigma_primary<2.5){
 	    phi_pt->Fill(pT, phi);
+	    eta_pt->Fill(pT, pseudorapidity);
 	    electron_pt->Fill(pT);	
+	    //..histograms for single track rec. efficiency systematics (must be inclusive electrons)
+	    firstTPC->Fill(pT, firstPoint);
+	    ndEdx_pt->Fill(pT, dedxHits);
+	    nHits_nMax_pt->Fill(pT, nHits, hitsRatio);
+	    dca_pt->Fill(pT, DCA);
 	  }
 		
 	  //..nsigma plots for purity
@@ -877,7 +853,11 @@ DiffVz_before->Fill(DiffVz);
 	  short charge2 = gtrack->charge();
 
 	  //..good global tracks
-	  if(pT_global>0.2 && nHits_global>=20 && hitsRatio_global>0.52 && TMath::Abs(nsigma_global)<5){
+	  if(pT_global < 0.2) continue;
+	  if(nHits_global < 20) continue;
+	  if(hitsRatio_global < 0.52) continue;
+	  if(TMath::Abs(nsigma_global) > 5) continue;
+	  //if(pT_global>0.2 && nHits_global>=20 && hitsRatio_global>0.52 && TMath::Abs(nsigma_global)<5){
 				
 	     StPhysicalHelixD e1Helix = (gl_track->helix());
 	     StPhysicalHelixD e2Helix = (gtrack->helix());
@@ -905,7 +885,9 @@ DiffVz_before->Fill(DiffVz);
              double massDCA=(LV1+LV2).m();
 
 	     //..good pairs
-	     if(pairDCA<1 && massDCA<0.3){
+	     if(massDCA > 0.3) continue;
+	     if(pairDCA > 1) continue;
+	     //if(pairDCA<1 && massDCA<0.3){
 			
 		//..EMC cuts QA		
 		if(TMath::Abs(deltaphi)<0.015 && nSMDE>1 && nSMDP>1 && 0.3<ratio && ratio<2 && 
@@ -989,18 +971,17 @@ DiffVz_before->Fill(DiffVz);
 		  }
 		}
 					
-	     }//..good pairs
-	  }//..good global track
+	     //}//..good pairs
+	  //}//..good global track
 	}//..loop over global tracks
-     }//..good primary track
+     //}//..good primary track
    }//..loop over primray tracks
- }//if passes refMult cut from StRefMultCorr
-}//if passes event cuts
+ }//if passes event cuts
 
-}//..end of central trigger cut
+//}//..end of central trigger cut
 
 cout<<"KG4"<<endl;
-*/
+
  return kStOK;
 
 }
@@ -2134,8 +2115,8 @@ hVz->Sumw2();
 hDiffVz = new TH1F("DiffVz","DiffVz",50,-3,3);
 hDiffVz->Sumw2();
 
-refMultiplicity = new TH1F("refMultiplicity","refMultiplicity;refMult;Counts",800,0,800);
-refMultiplicity->Sumw2();
+//refMultiplicity = new TH1F("refMultiplicity","refMultiplicity;refMult;Counts",800,0,800);
+//refMultiplicity->Sumw2();
 //centrality = new TH1F("centrality","centrality",9,0,9);
 //centrality->Sumw2();
 //mult_cent = new TH1F("mult_cent","mult_cent",800,0,800);
@@ -2146,9 +2127,14 @@ hdEdx->Sumw2();
 hnsigma = new TH2F("hnsigma","hnsigma;p_{T};n#sigma_{e}",100,0,10,200,-10,10);
 hnsigma->Sumw2();
 
+firstTPC_beforeCuts = new TH2F("firstTPC_beforeCuts","firstTPC_beforeCuts ;p_{T};1st TPC point",100,0,10,150,0,150);
+firstTPC_beforeCuts->Sumw2();
 firstTPC = new TH2F("firstTPC","firstTPC;p_{T};1st TPC point",100,0,10,150,0,150);
+firstTPC->Sumw2();
 ndEdx_pt = new TH2F("ndEdx_pt","ndEdx_pt;p_{T}; ndEdx hits",100,0,10,50,0,50);
+ndEdx_pt->Sumw2();
 nHits_nMax_pt = new TH3F("nHits_nMax_pt","nHits_nMax_pt;p_{T};nHits;nHits/nMax",100,0,10,50,0,50,50,0,1);
+nHits_nMax_pt->Sumw2();
 
 electron_pt = new TH1F ("electron_pt","electron_pt;p_{T} [GeV/c]",100,0,10);
 electron_pt->Sumw2();
